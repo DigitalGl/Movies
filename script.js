@@ -1,4 +1,3 @@
-
 const movies = [
     { title: "Гарри Поттер", description: "История о юном волшебнике.", image: "images/Harry Potter.webp" },
     { title: "Интерстеллар", description: "Фантастический фильм о путешествиях через червоточину.", image: "images/Interstellar.webp" },
@@ -25,10 +24,10 @@ const movies = [
 let currentPage = 1;
 const moviesPerPage = 10;
 
-// Функция для отображения фильмов на текущей странице
+// Функция для отображения фильмов
 function renderMovies(moviesArray) {
     const moviesContainer = document.getElementById("movies-container");
-    moviesContainer.innerHTML = ""; // Очищаем контейнер
+    moviesContainer.innerHTML = "";
 
     const start = (currentPage - 1) * moviesPerPage;
     const end = start + moviesPerPage;
@@ -39,29 +38,25 @@ function renderMovies(moviesArray) {
         movieCard.classList.add("movie-card");
 
         movieCard.innerHTML = `
-        <img src="${movie.image}" alt="${movie.title}" onerror="this.style.display='none'">
+        <img src="${movie.image}" alt="${movie.title}" onerror="this.src='images/placeholder.jpg';">
         <h3>${movie.title}</h3>
         <p>${movie.description}</p>
-    `;
+      `;
 
         moviesContainer.appendChild(movieCard);
     });
 
-    // Обновляем информацию о странице
     document.getElementById("page-info").textContent = `Страница ${currentPage}`;
-
-    // Включаем/выключаем кнопки
     document.getElementById("prev-page").disabled = currentPage === 1;
     document.getElementById("next-page").disabled = end >= moviesArray.length;
 }
 
-// Переход на следующую страницу
+// Пагинация
 document.getElementById("next-page").addEventListener("click", () => {
     currentPage++;
     renderMovies(movies);
 });
 
-// Переход на предыдущую страницу
 document.getElementById("prev-page").addEventListener("click", () => {
     currentPage--;
     renderMovies(movies);
@@ -73,8 +68,59 @@ document.getElementById("search").addEventListener("input", (event) => {
     const filteredMovies = movies.filter((movie) =>
         movie.title.toLowerCase().includes(searchText)
     );
-    currentPage = 1; // Сбрасываем страницу при поиске
+    currentPage = 1;
     renderMovies(filteredMovies);
+});
+
+// Смена темы
+const themeToggle = document.getElementById("theme-toggle");
+const body = document.body;
+
+themeToggle.addEventListener("click", () => {
+    body.classList.toggle("dark-theme");
+    themeToggle.textContent = body.classList.contains("dark-theme") ? "☀️" : "🌙";
+    localStorage.setItem("theme", body.classList.contains("dark-theme") ? "dark" : "light");
+});
+
+// Применение темы при загрузке страницы
+if (localStorage.getItem("theme") === "dark") {
+    body.classList.add("dark-theme");
+    themeToggle.textContent = "☀️";
+} else {
+    body.classList.remove("dark-theme");
+    themeToggle.textContent = "🌙";
+}
+
+// Открытие страницы с фильмом
+const moviesContainer = document.getElementById("movies-container");
+const movieDetail = document.getElementById("movie-detail");
+const detailImage = document.getElementById("detail-image");
+const detailTitle = document.getElementById("detail-title");
+const detailDescription = document.getElementById("detail-description");
+const closeDetail = document.getElementById("close-detail");
+
+moviesContainer.addEventListener("click", (event) => {
+    const movieCard = event.target.closest(".movie-card");
+    if (movieCard) {
+        const title = movieCard.querySelector("h3").textContent;
+        const movie = movies.find((m) => m.title === title);
+        if (movie) {
+            detailImage.src = movie.image;
+            detailTitle.textContent = movie.title;
+            detailDescription.textContent = movie.description;
+            movieDetail.classList.remove("hidden");
+        }
+    }
+});
+
+// Закрытие страницы с фильмом
+closeDetail.addEventListener("click", () => {
+    movieDetail.classList.add("hidden");
+});
+
+// Кнопка "Смотреть фильм"
+document.getElementById("watch-movie").addEventListener("click", () => {
+    alert("Фильм будет воспроизведен...");
 });
 
 // Первоначальная загрузка фильмов

@@ -1,44 +1,93 @@
+/* Основные стили */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    color: #333;
     margin: 0;
     padding: 0;
+    transition: background-color 0.3s, color 0.3s;
 }
 
+/* Темная тема */
+body.dark-theme {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.dark-theme .movie-card {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.dark-theme header {
+    background-color: #1e1e1e;
+}
+
+body.dark-theme #search {
+    background-color: #333;
+    color: white;
+}
+
+/* Шапка */
 header {
     background-color: #333;
     color: white;
     padding: 20px;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 header h1 {
     margin: 0;
+    font-size: 24px;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 #search {
     padding: 10px;
-    width: 300px;
-    margin-top: 10px;
+    width: 200px;
     border: none;
     border-radius: 5px;
 }
 
+#theme-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Контейнер для фильмов */
 .movies-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     padding: 20px;
+    gap: 20px;
 }
 
+/* Карточка фильма */
 .movie-card {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 10px;
     width: 200px;
     text-align: center;
     padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
 }
 
 .movie-card img {
@@ -56,6 +105,7 @@ header h1 {
     color: #555;
 }
 
+/* Пагинация */
 footer {
     text-align: center;
     padding: 20px;
@@ -76,4 +126,44 @@ footer button {
 footer button:disabled {
     background-color: #888;
     cursor: not-allowed;
+}
+
+/* Страница с описанием фильма */
+.movie-detail {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 100%;
+    z-index: 1000;
+}
+
+.movie-detail.hidden {
+    display: none;
+}
+
+#close-detail {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#watch-movie {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

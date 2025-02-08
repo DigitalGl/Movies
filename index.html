@@ -10,8 +10,11 @@
 
 <body>
     <header>
-        <h1>Добро пожаловать на киносайт!</h1>
-        <input type="text" id="search" placeholder="Поиск фильма...">
+        <h1>Киносайт</h1>
+        <div class="header-controls">
+            <input type="text" id="search" placeholder="Поиск фильма...">
+            <button id="theme-toggle">🌙</button>
+        </div>
     </header>
 
     <main>
@@ -25,6 +28,15 @@
         <span id="page-info">Страница 1</span>
         <button id="next-page">Вперед</button>
     </footer>
+
+    <!-- Страница с описанием фильма -->
+    <div id="movie-detail" class="movie-detail hidden">
+        <button id="close-detail">✖️</button>
+        <img id="detail-image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgAB/1h8vAAAAABJRU5ErkJggg==" alt="Постер фильма">
+        <h2 id="detail-title"></h2>
+        <p id="detail-description"></p>
+        <button id="watch-movie">Смотреть фильм</button>
+    </div>
 
     <script src="script.js"></script>
 </body>
